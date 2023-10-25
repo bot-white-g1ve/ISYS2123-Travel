@@ -1,0 +1,121 @@
+{% include 'top.html' %}
+
+<div id="content">
+    <h1 class="page-title">Travel Times List Contents</h1>
+    
+    <div style="margin-bottom: 20px;">
+        {% if session['isadmin'] == True %}
+            <div style="float: left;">
+                <button class="pure-button">
+                    <a href="{{ url_for('add_travel_time') }}" class="pure-menu-link">Add Travel Time</a>
+                </button>
+            </div>
+        {% endif %}
+
+        <div style="float: right;">
+            <button class="pure-button" id="openModalBtn">Produce Longest Travel Times Report</button>
+        </div>
+        <div style="clear: both;"></div> <!-- This line is added to clear the floats -->
+    </div>
+    
+    <table class="pure-table">
+        <thead>
+            <tr>
+                <th> start station id </th>
+                <th> end station id </th>
+                <th> expected travel time(in seconds) </th>
+                <th> stops traveled </th>
+                <th> trip legs </th>
+                <th> coordinate map length </th>
+                {% if session['isadmin'] == True %}
+                    <th> Actions </th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in travel_times %}
+            <tr>
+                <td> {{item['startstationid']}} </td>
+                <td> {{item['endstationid']}} </td>
+                <td> {{item['expectedtraveltimeseconds']}} </td>
+                <td> {{item['stopstraversed']}} </td>
+                <td> {{item['triplegs']}} </td>
+                <td> {{item['coordinatemaplen']}} </td>
+                {% if session['isadmin'] == True %}
+                    <td>
+                        <button class="pure-button" data-startstationid="{{ item['startstationid'] }}" data-endstationid="{{ item['endstationid'] }}" onclick="confirmDelete(this)"><i class="fa-solid fa-trash"></i>Delete</button>
+                        <button class="pure-button" onclick="location.href='{{ url_for('update_travel_time_form', startstationid=item['startstationid'], endstationid=item['endstationid']) }}'"><i class="fa-solid fa-gear"></i>Update</button>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- Modal Structure -->
+<div id="reportModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h4>Select Report Type</h4>
+        <p>
+            <label>
+                <input name="reportType" type="radio" value="startstation" />
+                <span>Generate longest travel time report for each entry station</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input name="reportType" type="radio" value="endstation" />
+                <span>Generate longest travel time report for each end station</span>
+            </label>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="generateReport()">Generate Report</a>
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Get modal and its components
+        var modal = $("#reportModal");
+        var btn = $("#openModalBtn");
+        var span = $(".close");
+
+        // When the user clicks the button, open the modal
+        btn.click(function() {
+            modal.css("display", "block");
+        });
+
+        // When the user clicks on <span> (x), close the modal
+        span.click(function() {
+            modal.css("display", "none");
+        });
+
+        // When the user clicks anywhere outside of the modal, close it
+        $(window).click(function(event) {
+            if (event.target == modal[0]) {
+                modal.css("display", "none");
+            }
+        });
+    });
+    function confirmDelete(button) {
+        let startstationid = button.getAttribute('data-startstationid');
+        let endstationid = button.getAttribute('data-endstationid');
+
+        if (confirm('Are you sure you want to delete this travel time?')) {
+            location.href = '/delete_travel_time/' + startstationid + '/' + endstationid;
+        }
+    }
+    function generateReport() {
+        let selectedValue = document.querySelector('input[name="reportType"]:checked').value;
+        if (selectedValue === "startstation") {
+            location.href = '/produce_report_startstation';
+        } else {
+            location.href = '/produce_report_endstation';
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% include 'top.html' %}
+
+<div id="content">
+    <h1 class="page-title">Longest Expected Travel Times Report</h1>
+    <table class="pure-table">
+        <thead>
+            <tr>
+                <th>Start Station ID</th>
+                <th>End Station ID with Max Travel Time</th>
+                <th>Max Expected Travel Time (in seconds)</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for station in stations %}
+            <tr>
+                <td>{{ station[0] }}</td>
+                <td>{{ station[1] }}</td>
+                <td>{{ station[2] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+</body>
+</html>

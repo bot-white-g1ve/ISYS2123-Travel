@@ -1,0 +1,55 @@
+{% include 'top.html' %}
+
+<div class="centered-container">
+    <div class="content">
+        <div class="container details">
+
+            <h2 class="title"> Update Travel Time </h2>
+
+            <form class="Update" method="POST" action="{{url_for('update_travel_time')}}">
+
+                <div>
+                    <label for="startstationid">Start Station ID:</label>
+                    <span id="startstationid">{{ item['startstationid'] }}</span>,
+                    <input type="hidden" name="startstationid" value="{{ item['startstationid'] }}">
+                </div>
+
+                <div>
+                    <label for="endstationid">End Station ID:</label>
+                    <span id="endstationid">{{ item['endstationid'] }}</span>
+                    <input type="hidden" name="endstationid" value="{{ item['endstationid'] }}">
+                </div>
+
+                <div>
+                    <label for="expectedtraveltimeseconds">Expected Travel Time (in seconds):</label>
+                    <input type="number" id="expectedtraveltimeseconds" name="expectedtraveltimeseconds" value="{{ item['expectedtraveltimeseconds'] }}" placeholder="Enter expected travel time" min="0">
+                </div>
+
+                <div>
+                    <label for="stopstraversed">Stops Traversed:</label>
+                    <input type="number" id="stopstraversed" name="stopstraversed" value="{{ item['stopstraversed'] }}" placeholder="Enter stops traversed" min="0">
+                </div>
+
+                <div>
+                    <label for="triplegs">Trip Legs:</label>
+                    <input type="number" id="triplegs" name="triplegs" value="{{ item['triplegs'] }}" placeholder="Enter trip legs" min="0">
+                </div>
+
+                <div>
+                    <label for="coordinatemaplen">Coordinate Map Length:</label>
+                    <input type="number" id="coordinatemaplen" name="coordinatemaplen" value="{{ item['coordinatemaplen'] }}" placeholder="Enter coordinate map length" min="0">
+                </div>
+
+                <div>
+                    <button class="pure-button pure-button-primary" type="submit">Update</button>
+                </div>
+            </form>
+            <p>You can only update the field except the start station and the end station.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+

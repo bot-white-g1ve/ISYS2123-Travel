@@ -1,0 +1,59 @@
+{% include 'top.html' %}
+<div class="centered-container">
+    <div class="content">
+        <div class="container details">
+
+            <h2 class="title"> Add Travel Time </h2>
+
+            <form class="add" method="POST" action="{{url_for('add_travel_time')}}">
+
+                <div>
+                    <label for="startstationid">Start Station ID:</label>
+                    <select id="startstationid" name="startstationid">
+                        {% for station_id in station_ids %}
+                            <option value="{{ station_id }}">{{ station_id }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label for="endstationid">End Station ID:</label>
+                    <select id="endstationid" name="endstationid">
+                        {% for station_id in station_ids %}
+                            <option value="{{ station_id }}">{{ station_id }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label for="expectedtraveltimeseconds">Expected Travel Time (in seconds):</label>
+                    <input type="number" id="expectedtraveltimeseconds" name="expectedtraveltimeseconds" placeholder="Enter expected travel time" min="1">
+                </div>
+                
+                <div>
+                    <label for="stopstraversed">Stops Traversed:</label>
+                    <input type="number" id="stopstraversed" name="stopstraversed" placeholder="Enter stops traversed" min="1">
+                </div>
+                
+                <div>
+                    <label for="triplegs">Trip Legs:</label>
+                    <input type="number" id="triplegs" name="triplegs" placeholder="Enter trip legs" min="1">
+                </div>
+                
+                <div>
+                    <label for="coordinatemaplen">Coordinate Map Length:</label>
+                    <input type="number" id="coordinatemaplen" name="coordinatemaplen" placeholder="Enter coordinate map length" min="1">
+                </div>
+
+                <div>
+                    <button class="pure-button pure-button-primary" type="submit">Add</button>
+                </div>
+
+            </form>
+            <p>Available Station IDs: {{ station_ids|join(', ') }}</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

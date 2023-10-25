@@ -1,0 +1,46 @@
+{% include 'top.html' %}
+
+<div id="content">
+    <h1 class="page-title">Travel Times List Contents</h1>
+    {% if session['isadmin'] == True %}
+        <div style="float: left;">
+            <button class="pure-button" style="float: center;"><a href="{{ url_for('add_travel_time') }}" class="pure-menu-link">Add Travel Time</a></button>
+        </div>
+        <br/>
+    {% endif %}
+    <table class="pure-table">
+        <thead>
+            <tr>
+                <th> start station id </th>
+                <th> end station id </th>
+                <th> expected travel time(in seconds) </th>
+                <th> stops traveled </th>
+                <th> trip legs </th>
+                <th> coordinate map length </th>
+                {% if session['isadmin'] == True %}
+                    <th> Actions </th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in travel_times %}
+            <tr>
+                <td> {{item['startstationid']}} </td>
+                <td> {{item['endstationid']}} </td>
+                <td> {{item['expectedtraveltimeseconds']}} </td>
+                <td> {{item['stopstraversed']}} </td>
+                <td> {{item['triplegs']}} </td>
+                <td> {{item['coordinatemaplen']}} </td>
+                {% if session['isadmin'] == True %}
+                    <td>
+                        <button class="pure-button"><a href="{{ url_for('delete_travel_time', startstationid=item.startstationid, endstationid=item.endstationid) }}" class="pure-menu-link">Delete</a></button>
+                        <button class="pure-button"><a href="{{ url_for('update_travel_time', startstationid=item.startstationid, endstationid=item.endstationid) }}" class="pure-menu-link">Update</a></button>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

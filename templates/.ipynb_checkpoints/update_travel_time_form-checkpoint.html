@@ -1,0 +1,35 @@
+{% include 'top.html' %}
+
+<div class="content">
+    <div class="container details">
+
+        <h2 class="title"> Update Travel Time </h2>
+
+        <form class="Update" method="POST" action="{{url_for('update_travel_time')}}">
+
+            <label for="startstationid">Start Station ID:</label>
+            <input type="number" id="startstationid" name="startstationid" value="{{ item['startstationid'] }}" readonly>
+
+            <label for="endstationid">End Station ID:</label>
+            <input type="number" id="endstationid" name="endstationid" value="{{ item['endstationid'] }}" readonly>
+
+            <label for="expectedtraveltimeseconds">Expected Travel Time (in seconds):</label>
+            <input type="number" id="expectedtraveltimeseconds" name="expectedtraveltimeseconds" value="{{ item['expectedtraveltimeseconds'] }}" placeholder="Enter expected travel time">
+
+            <label for="stopstraversed">Stops Traversed:</label>
+            <input type="number" id="stopstraversed" name="stopstraversed" value="{{ item['stopstraversed'] }}" placeholder="Enter stops traversed">
+
+            <label for="triplegs">Trip Legs:</label>
+            <input type="number" id="triplegs" name="triplegs" value="{{ item['triplegs'] }}" placeholder="Enter trip legs">
+
+            <label for="coordinatemaplen">Coordinate Map Length:</label>
+            <input type="number" id="coordinatemaplen" name="coordinatemaplen" value="{{ item['coordinatemaplen'] }}" placeholder="Enter coordinate map length">
+  
+            <button class="pure-button pure-button-primary" type="submit">Update</button>
+        </form>
+        <p>You can only update the field except the start station and the end station.</p>
+    </div>
+</div>
+</body>
+</html>
+
