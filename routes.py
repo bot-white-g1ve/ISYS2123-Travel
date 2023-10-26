@@ -475,10 +475,20 @@ def update_travel_time():
 
 @app.route('/produce_report_startstation')
 def produce_report_startstation():
-    stations = database.get_max_travel_time_per_station()
+    stations = database.get_max_travel_time_per_startstation()
     print("The data route has recieved: "+str(stations))
     if stations is not None:
-        return render_template('report.html', stations=stations, page={"title": "Travel Time Report"}, session=session)
+        return render_template('startstationreport.html', stations=stations, page={"title": "Travel Time Report"}, session=session)
+    else:
+        flash("Error fetching the report.")
+        return redirect(url_for('index'))
+
+@app.route('/produce_report_endstation')
+def produce_report_endstation():
+    stations = database.get_max_travel_time_per_endstation()
+    print("The data route has recieved: "+str(stations))
+    if stations is not None:
+        return render_template('endstationreport.html', stations=stations, page={"title": "Travel Time Report"}, session=session)
     else:
         flash("Error fetching the report.")
         return redirect(url_for('index'))

@@ -655,7 +655,7 @@ def update_travel_time_in_db(startstationid, endstationid, expectedtraveltimesec
         cur.close()
         conn.close()
 
-def get_max_travel_time_per_station():
+def get_max_travel_time_per_startstation():
     conn = database_connect()
     if conn is None:
         return None
@@ -672,6 +672,36 @@ def get_max_travel_time_per_station():
                 FROM opaltravel.TravelTimes
             )
             SELECT startstationid, endstationid, expectedtraveltimeseconds
+            FROM MaxTravel
+            WHERE rnk = 1;
+        """
+        cur.execute(sql)
+        results = cur.fetchall()
+        print("the results database return: "+str(results))
+    except:
+        print("Error fetching max travel time report:", sys.exc_info()[0])
+    finally:
+        cur.close()
+        conn.close()
+    return results
+
+def get_max_travel_time_per_endstation():
+    conn = database_connect()
+    if conn is None:
+        return None
+    
+    cur = conn.cursor()
+    results = []
+    try:
+        sql = """
+            WITH MaxTravel AS (
+                SELECT endstationid, 
+                       startstationid,
+                       expectedtraveltimeseconds,
+                       RANK() OVER(PARTITION BY endstationid ORDER BY expectedtraveltimeseconds DESC) as rnk
+                FROM opaltravel.TravelTimes
+            )
+            SELECT endstationid, startstationid, expectedtraveltimeseconds
             FROM MaxTravel
             WHERE rnk = 1;
         """
