@@ -92,5 +92,5 @@ CREATE TABLE Travel (
     endstationid bigint REFERENCES Stations(stationid) NOT NULL,
     userid int REFERENCES Users(userid) NOT NULL,
     traveltime bigint NOT NULL,
-    PRIMARY KEY (startstationid, endstationid)
+    PRIMARY KEY (startstationid, endstationid, userid)
 );
