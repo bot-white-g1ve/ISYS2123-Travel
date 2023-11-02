@@ -86,3 +86,11 @@ CREATE TABLE TravelTimes (
     coordinatemaplen bigint,
     CONSTRAINT traveltimes_pk PRIMARY KEY (startstationid, endstationid)
 );
+
+CREATE TABLE Travel (
+    startstationid bigint REFERENCES Stations(stationid) NOT NULL,
+    endstationid bigint REFERENCES Stations(stationid) NOT NULL,
+    userid int REFERENCES Users(userid) NOT NULL,
+    traveltime bigint NOT NULL,
+    PRIMARY KEY (startstationid, endstationid)
+);
